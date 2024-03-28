@@ -32,7 +32,14 @@ while True:
     except:
         pass
 
+altered = map(lambda n: n*2, list)
+filtered = filter(lambda n: n%2==0, list)
+sorted = sorted(list, key=lambda n: n//10)
+
 print(*list)
+print(*altered)
+print(*filtered)
+print(*sorted)
 
 num=1234.56789
 print(f"{round(num, 3):,}")
