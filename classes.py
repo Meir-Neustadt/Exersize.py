@@ -1,18 +1,21 @@
-import statistics
 import re
 import patterns
 import func
 
 class Member:
 
-    count = 0
+    _count = 0
 
     def __init__(self, lname, fname, age, mail):
         self.lname=lname
         self.fname=fname
         self.age=age
         self.mail=mail
-        Member.count+=1
+        Member._count+=1
+
+    @classmethod
+    def count(cls):
+        return cls._count 
     
     @property
     def lname(self):
@@ -20,6 +23,9 @@ class Member:
     @property
     def fname(self):
         return self._fname
+    @property
+    def name(self):
+        return f'{self._fname} {self.lname}'
     @property
     def age(self):
         return self._age
@@ -57,15 +63,27 @@ class Member:
             raise ValueError('not a valid mail')
         
     def __str__(self):
-        return f'{self.lname} {self.fname}, {str(self.age)}, {self.mail},'
+        return f'{self.name}, {str(self.age)}, {self.mail},'
     
 
 class Student(Member):
+
+    _students = []
 
     def __init__(self, lname, fname, age, mail, grades):
         super().__init__(lname, fname, age, mail)
         self.grades=grades
         self.grade=grades
+        Student._students.append(self)
+
+    @classmethod
+    def students(cls):
+        return cls._students
+    @classmethod
+    def exelent_students(cls):
+        students = cls.students()
+        students = filter(lambda st: st.grade > 95, students)
+        return students
 
     @property 
     def grades(self):
@@ -82,11 +100,12 @@ class Student(Member):
         self._grade=func.ave(grades, 1)
 
     def __str__(self):
-        return super().__str__() + f'{self.grades}, {self.grade}'
+        return super().__str__() + f'\ngrades: {self.grades}, average: {self.grade}'
 
 
 
 ######################
     
-student = Student('Meir','Neustadt',26,'msn.binah.1@gmail.com',[99,100,100,97,100,100,95,100,100,100,100])
-print(student)
+student1 = Student('Neustadt','Meir',26,'msn.binah.1@gmail.com',[99,100,100,97,100,100,95,100,100,100,100])
+student2 = Student('Aaa','Bbb',30,'0123@gmail.com',[30,30,30])
+print(list(Student.exelent_students()))
