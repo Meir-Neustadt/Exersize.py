@@ -108,4 +108,5 @@ class Student(Member):
     
 student1 = Student('Neustadt','Meir',26,'msn.binah.1@gmail.com',[99,100,100,97,100,100,95,100,100,100,100])
 student2 = Student('Aaa','Bbb',30,'0123@gmail.com',[30,30,30])
-print(list(Student.exelent_students()))
+
+list(map(print,Student.exelent_students()))
