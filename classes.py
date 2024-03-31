@@ -1,6 +1,7 @@
 import re
+import random
 import patterns
-import func
+import func as f
 
 class Member:
 
@@ -51,7 +52,7 @@ class Member:
             age=int(age)
         except:
             raise ValueError('not a number')
-        if 16 < age < 120:
+        if 14 < age < 120:
             self._age=age
         else:
             raise ValueError('not a valid age')
@@ -63,7 +64,7 @@ class Member:
             raise ValueError('not a valid mail')
         
     def __str__(self):
-        return f'{self.name}, {str(self.age)}, {self.mail},'
+        return f'\n{self.name}, {str(self.age)}, {self.mail},'
     
 
 class Student(Member):
@@ -82,7 +83,7 @@ class Student(Member):
     @classmethod
     def exelent_students(cls):
         students = cls.students()
-        students = filter(lambda st: st.grade > 95, students)
+        students = filter(lambda st: st.grade > 85, students)
         return students
 
     @property 
@@ -97,7 +98,7 @@ class Student(Member):
         self._grades=grades
     @grade.setter
     def grade(self, grades):
-        self._grade=func.ave(grades, 1)
+        self._grade=f.ave(grades, 1)
 
     def __str__(self):
         return super().__str__() + f'\ngrades: {self.grades}, average: {self.grade}'
@@ -107,6 +108,6 @@ class Student(Member):
 ######################
     
 student1 = Student('Neustadt','Meir',26,'msn.binah.1@gmail.com',[99,100,100,97,100,100,95,100,100,100,100])
-student2 = Student('Aaa','Bbb',30,'0123@gmail.com',[30,30,30])
+students_list = [Student(f.random_name(), f.random_name(), random.randint(15,60), f.random_mail(), f.random_grades()) for _ in range(20)]
 
-list(map(print,Student.exelent_students()))
+f.print_list(Student.exelent_students())
